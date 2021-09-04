@@ -14,7 +14,7 @@ $lateForm = Form::createForm("globals.php", "POST");
 function itCreateForm(Form $form): Form {
     $form->addField("Name", "name");
     $form->addField("Surname", "surname");
-    $form->addField("Age", "age", 30);
+    $form->addField("Age", "age", 16);
     return $form;
 }
 
