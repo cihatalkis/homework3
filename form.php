@@ -24,3 +24,73 @@
  * 
  * > **Not: İsteyenler `app2.php` ve `form2.php` isminde dosyalar oluşturup sınıfa farklı özellikler kazandırabilir.
  */
+
+class Form
+
+{
+    public $action = "";
+    public $method = "";
+    public $fields = array();
+    private function __construct($action, &$method = "POST")
+
+    {
+
+        $this->action = $action;
+       
+        $this->method = $method;
+
+    }
+
+    public function addField(...$fields)
+
+    { 
+        array_push($this->fields, $fields);
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method; 
+    }
+
+    public static function createPostForm($action)
+
+    {
+        
+        $PostForm = self::createForm($action, "POST"); 
+
+        return $PostForm;
+    }
+
+    public static function createGetForm($action)
+
+    {
+        
+        $GetForm = self::createForm($action, "GET");
+
+        return $GetForm;
+    }
+
+    public static function createForm($action, $method)
+
+    {
+        $Form = new Form($action, $method); 
+
+        return $Form;
+    }
+
+    public function render()
+
+    { 
+        echo "<form method='" . $this->method . "' action='" . $this->action . "'>\n";
+        foreach ($this->fields as $property) {
+            echo "    <label for='" . $property[1] . "'>" . $property[0] . "</label>\n";
+            if(isset($property[2])){
+                echo "    <input type='text' name='" . $property[1] . "' value='" .$property[2]. "' />\n";
+            }else{
+                echo "    <input type='text' name='" . $property[1] . "' value='' />\n";
+            }
+        }
+        echo "    <button type='submit'>SEND</button>\n</form>\n";
+    }
+
+}
